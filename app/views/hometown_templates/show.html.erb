@@ -1,0 +1,66 @@
+<h1>
+  Hometown #<%= @the_hometown.id %> details
+</h1>
+
+<article>
+  <div>
+    <a href="/hometowns">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_hometown/<%= @the_hometown.id %>">
+      Delete hometown
+    </a>
+  </div>
+  <dl>
+    <dt>
+      Name
+    </dt>
+    <dd>
+      <%= @the_hometown.name %>
+    </dd>
+
+    <dt>
+      Created at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_hometown.created_at) %> ago
+    </dd>
+
+    <dt>
+      Updated at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_hometown.updated_at) %> ago
+    </dd>
+  </dl>
+</article>
+
+<hr>
+
+
+<article>
+  <header>
+    <h2>
+      Edit hometown
+    </h2>
+  </header>
+
+  <form action="/modify_hometown/<%= @the_hometown.id %>"  method="post" >
+    <div>
+      <label for="name_box">
+        Name
+      </label>
+
+      <input type="text" id="name_box" name="query_name" value="<%= @the_hometown.name %>">
+    </div>
+
+    <button type="submit">
+      Update hometown
+    </button>
+  </form>
+</article>
+
+<hr>

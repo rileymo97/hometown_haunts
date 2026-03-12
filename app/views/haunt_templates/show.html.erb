@@ -1,0 +1,111 @@
+<h1>
+  Haunt #<%= @the_haunt.id %> details
+</h1>
+
+<article>
+  <div>
+    <a href="/haunts">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_haunt/<%= @the_haunt.id %>">
+      Delete haunt
+    </a>
+  </div>
+  <dl>
+    <dt>
+      Hometown
+    </dt>
+    <dd>
+      <%= @the_haunt.hometown_id %>
+    </dd>
+
+    <dt>
+      Name
+    </dt>
+    <dd>
+      <%= @the_haunt.name %>
+    </dd>
+
+    <dt>
+      Category
+    </dt>
+    <dd>
+      <%= @the_haunt.category %>
+    </dd>
+
+    <dt>
+      Address
+    </dt>
+    <dd>
+      <%= @the_haunt.address %>
+    </dd>
+
+    <dt>
+      Created at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_haunt.created_at) %> ago
+    </dd>
+
+    <dt>
+      Updated at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_haunt.updated_at) %> ago
+    </dd>
+  </dl>
+</article>
+
+<hr>
+
+
+<article>
+  <header>
+    <h2>
+      Edit haunt
+    </h2>
+  </header>
+
+  <form action="/modify_haunt/<%= @the_haunt.id %>"  method="post" >
+    <div>
+      <label for="hometown_id_box">
+        Hometown
+      </label>
+
+      <input type="text" id="hometown_id_box" name="query_hometown_id" value="<%= @the_haunt.hometown_id %>">
+    </div>
+
+    <div>
+      <label for="name_box">
+        Name
+      </label>
+
+      <input type="text" id="name_box" name="query_name" value="<%= @the_haunt.name %>">
+    </div>
+
+    <div>
+      <label for="category_box">
+        Category
+      </label>
+
+      <input type="text" id="category_box" name="query_category" value="<%= @the_haunt.category %>">
+    </div>
+
+    <div>
+      <label for="address_box">
+        Address
+      </label>
+
+      <input type="text" id="address_box" name="query_address" value="<%= @the_haunt.address %>">
+    </div>
+
+    <button type="submit">
+      Update haunt
+    </button>
+  </form>
+</article>
+
+<hr>

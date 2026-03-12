@@ -1,0 +1,111 @@
+<h1>
+  Recommendation #<%= @the_recommendation.id %> details
+</h1>
+
+<article>
+  <div>
+    <a href="/recommendations">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_recommendation/<%= @the_recommendation.id %>">
+      Delete recommendation
+    </a>
+  </div>
+  <dl>
+    <dt>
+      Specific recommendations
+    </dt>
+    <dd>
+      <%= @the_recommendation.specific_recommendations %>
+    </dd>
+
+    <dt>
+      User
+    </dt>
+    <dd>
+      <%= @the_recommendation.user_id %>
+    </dd>
+
+    <dt>
+      Haunt
+    </dt>
+    <dd>
+      <%= @the_recommendation.haunt_id %>
+    </dd>
+
+    <dt>
+      Appx times haunted
+    </dt>
+    <dd>
+      <%= @the_recommendation.appx_times_haunted %>
+    </dd>
+
+    <dt>
+      Created at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_recommendation.created_at) %> ago
+    </dd>
+
+    <dt>
+      Updated at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_recommendation.updated_at) %> ago
+    </dd>
+  </dl>
+</article>
+
+<hr>
+
+
+<article>
+  <header>
+    <h2>
+      Edit recommendation
+    </h2>
+  </header>
+
+  <form action="/modify_recommendation/<%= @the_recommendation.id %>"  method="post" >
+    <div>
+      <label for="specific_recommendations_box">
+        Specific recommendations
+      </label>
+
+      <input type="text" id="specific_recommendations_box" name="query_specific_recommendations" value="<%= @the_recommendation.specific_recommendations %>">
+    </div>
+
+    <div>
+      <label for="user_id_box">
+        User
+      </label>
+
+      <input type="text" id="user_id_box" name="query_user_id" value="<%= @the_recommendation.user_id %>">
+    </div>
+
+    <div>
+      <label for="haunt_id_box">
+        Haunt
+      </label>
+
+      <input type="text" id="haunt_id_box" name="query_haunt_id" value="<%= @the_recommendation.haunt_id %>">
+    </div>
+
+    <div>
+      <label for="appx_times_haunted_box">
+        Appx times haunted
+      </label>
+
+      <input type="text" id="appx_times_haunted_box" name="query_appx_times_haunted" value="<%= @the_recommendation.appx_times_haunted %>">
+    </div>
+
+    <button type="submit">
+      Update recommendation
+    </button>
+  </form>
+</article>
+
+<hr>

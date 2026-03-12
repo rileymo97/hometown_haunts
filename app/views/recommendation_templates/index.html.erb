@@ -1,0 +1,67 @@
+<h1>
+  List of all recommendations
+</h1>
+
+<hr>
+
+<article>
+  <header>
+    <h2>
+      Add a new recommendation
+    </h2>
+  </header>
+
+  <form action="/insert_recommendation" method="post">
+    <div>
+      <label for="specific_recommendations_box">
+        Specific recommendations
+      </label>
+
+      <input type="text" id="specific_recommendations_box" name="query_specific_recommendations">
+    </div>
+
+    <div>
+      <label for="user_id_box">
+        User
+      </label>
+
+      <input type="text" id="user_id_box" name="query_user_id">
+    </div>
+
+    <div>
+      <label for="haunt_id_box">
+        Haunt
+      </label>
+
+      <input type="text" id="haunt_id_box" name="query_haunt_id">
+    </div>
+
+    <div>
+      <label for="appx_times_haunted_box">
+        Appx times haunted
+      </label>
+
+      <input type="text" id="appx_times_haunted_box" name="query_appx_times_haunted">
+    </div>
+
+    <button type="submit">
+      Create recommendation
+    </button>
+  </form>
+</article>
+
+<hr>
+
+<article>
+  <ul>
+    <% @list_of_recommendations.each do |a_recommendation| %>
+      <li>
+        <a href="/recommendations/<%= a_recommendation.id %>">
+          Recommendation #<%= a_recommendation.id %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</article>
+
+<hr>

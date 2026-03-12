@@ -1,0 +1,51 @@
+<h1>
+  List of all photos
+</h1>
+
+<hr>
+
+<article>
+  <header>
+    <h2>
+      Add a new photo
+    </h2>
+  </header>
+
+  <form action="/insert_photo" method="post">
+    <div>
+      <label for="image_box">
+        Image
+      </label>
+
+      <input type="text" id="image_box" name="query_image">
+    </div>
+
+    <div>
+      <label for="recommendation_id_box">
+        Recommendation
+      </label>
+
+      <input type="text" id="recommendation_id_box" name="query_recommendation_id">
+    </div>
+
+    <button type="submit">
+      Create photo
+    </button>
+  </form>
+</article>
+
+<hr>
+
+<article>
+  <ul>
+    <% @list_of_photos.each do |a_photo| %>
+      <li>
+        <a href="/photos/<%= a_photo.id %>">
+          Photo #<%= a_photo.id %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</article>
+
+<hr>

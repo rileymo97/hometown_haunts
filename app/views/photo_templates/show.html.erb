@@ -1,0 +1,81 @@
+<h1>
+  Photo #<%= @the_photo.id %> details
+</h1>
+
+<article>
+  <div>
+    <a href="/photos">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_photo/<%= @the_photo.id %>">
+      Delete photo
+    </a>
+  </div>
+  <dl>
+    <dt>
+      Image
+    </dt>
+    <dd>
+      <%= @the_photo.image %>
+    </dd>
+
+    <dt>
+      Recommendation
+    </dt>
+    <dd>
+      <%= @the_photo.recommendation_id %>
+    </dd>
+
+    <dt>
+      Created at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_photo.created_at) %> ago
+    </dd>
+
+    <dt>
+      Updated at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_photo.updated_at) %> ago
+    </dd>
+  </dl>
+</article>
+
+<hr>
+
+
+<article>
+  <header>
+    <h2>
+      Edit photo
+    </h2>
+  </header>
+
+  <form action="/modify_photo/<%= @the_photo.id %>"  method="post" >
+    <div>
+      <label for="image_box">
+        Image
+      </label>
+
+      <input type="text" id="image_box" name="query_image" value="<%= @the_photo.image %>">
+    </div>
+
+    <div>
+      <label for="recommendation_id_box">
+        Recommendation
+      </label>
+
+      <input type="text" id="recommendation_id_box" name="query_recommendation_id" value="<%= @the_photo.recommendation_id %>">
+    </div>
+
+    <button type="submit">
+      Update photo
+    </button>
+  </form>
+</article>
+
+<hr>

@@ -1,0 +1,96 @@
+<h1>
+  Friendship #<%= @the_friendship.id %> details
+</h1>
+
+<article>
+  <div>
+    <a href="/friendships">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_friendship/<%= @the_friendship.id %>">
+      Delete friendship
+    </a>
+  </div>
+  <dl>
+    <dt>
+      Requester
+    </dt>
+    <dd>
+      <%= @the_friendship.requester_id %>
+    </dd>
+
+    <dt>
+      Recipient
+    </dt>
+    <dd>
+      <%= @the_friendship.recipient_id %>
+    </dd>
+
+    <dt>
+      Request status
+    </dt>
+    <dd>
+      <%= @the_friendship.request_status %>
+    </dd>
+
+    <dt>
+      Created at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_friendship.created_at) %> ago
+    </dd>
+
+    <dt>
+      Updated at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_friendship.updated_at) %> ago
+    </dd>
+  </dl>
+</article>
+
+<hr>
+
+
+<article>
+  <header>
+    <h2>
+      Edit friendship
+    </h2>
+  </header>
+
+  <form action="/modify_friendship/<%= @the_friendship.id %>"  method="post" >
+    <div>
+      <label for="requester_id_box">
+        Requester
+      </label>
+
+      <input type="text" id="requester_id_box" name="query_requester_id" value="<%= @the_friendship.requester_id %>">
+    </div>
+
+    <div>
+      <label for="recipient_id_box">
+        Recipient
+      </label>
+
+      <input type="text" id="recipient_id_box" name="query_recipient_id" value="<%= @the_friendship.recipient_id %>">
+    </div>
+
+    <div>
+      <label for="request_status_box">
+        Request status
+      </label>
+
+      <input type="text" id="request_status_box" name="query_request_status" value="<%= @the_friendship.request_status %>">
+    </div>
+
+    <button type="submit">
+      Update friendship
+    </button>
+  </form>
+</article>
+
+<hr>

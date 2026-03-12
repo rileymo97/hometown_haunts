@@ -1,0 +1,67 @@
+<h1>
+  List of all haunts
+</h1>
+
+<hr>
+
+<article>
+  <header>
+    <h2>
+      Add a new haunt
+    </h2>
+  </header>
+
+  <form action="/insert_haunt" method="post">
+    <div>
+      <label for="hometown_id_box">
+        Hometown
+      </label>
+
+      <input type="text" id="hometown_id_box" name="query_hometown_id">
+    </div>
+
+    <div>
+      <label for="name_box">
+        Name
+      </label>
+
+      <input type="text" id="name_box" name="query_name">
+    </div>
+
+    <div>
+      <label for="category_box">
+        Category
+      </label>
+
+      <input type="text" id="category_box" name="query_category">
+    </div>
+
+    <div>
+      <label for="address_box">
+        Address
+      </label>
+
+      <input type="text" id="address_box" name="query_address">
+    </div>
+
+    <button type="submit">
+      Create haunt
+    </button>
+  </form>
+</article>
+
+<hr>
+
+<article>
+  <ul>
+    <% @list_of_haunts.each do |a_haunt| %>
+      <li>
+        <a href="/haunts/<%= a_haunt.id %>">
+          Haunt #<%= a_haunt.id %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</article>
+
+<hr>
