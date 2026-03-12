@@ -2,8 +2,8 @@ class HometownsController < ApplicationController
   def index
     matching_hometowns = Hometown.all
 
-    @list_of_hometowns = matching_hometowns.order({ :created_at => :desc })
-
+    @list_of_hometowns = matching_hometowns.includes(:haunts).order({ :created_at => :desc })
+    
     render({ :template => "hometown_templates/index" })
   end
 

@@ -11,7 +11,7 @@
 
     const geocoder = new google.maps.Geocoder();
 
-    const addresses = <%= raw @list_of_hometowns.filter_map(&:address).to_json %>;
+    const addresses = <%= raw @list_of_hometowns.filter_map { |h| h.haunts.first&.address }.to_json %>;
 
     addresses.forEach(function(address) {
       geocoder.geocode({ address: address }, function(results, status) {

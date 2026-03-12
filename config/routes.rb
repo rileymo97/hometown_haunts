@@ -76,7 +76,8 @@ Rails.application.routes.draw do
   #------------------------------
 
   # Routes for the Recommendation resource:
-
+  get "/recommend" => "recommendations#new"
+  post "/recommend" => "recommendations#recommend"
   # CREATE
   post("/insert_recommendation", { :controller => "recommendations", :action => "create" })
 

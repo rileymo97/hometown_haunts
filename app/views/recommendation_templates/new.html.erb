@@ -1,0 +1,25 @@
+<h1>Recommend a Haunt</h1>
+
+<form action="/recommend" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+  <label>Hometown</label>
+  <input type="text" name="query_hometown_name" placeholder="e.g. Phoenix">
+
+  <label>Haunt Name</label>
+  <input type="text" name="query_haunt_name" placeholder="e.g. Postino Central">
+
+  <label>Category</label>
+  <input type="text" name="query_category" placeholder="e.g. Restaurant, Bar, Activity">
+
+  <label>Address</label>
+  <input type="text" name="query_address" placeholder="e.g. 1 E Washington St, Phoenix, AZ">
+
+  <label>Your Recommendation</label>
+  <input type="text" name="query_specific_recommendations" placeholder="e.g. Get the bruschetta!">
+
+  <label>Approximate times visited</label>
+  <input type="number" name="query_appx_times_haunted">
+
+  <button type="submit">Submit Recommendation</button>
+</form>
