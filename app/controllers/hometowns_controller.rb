@@ -14,6 +14,8 @@ class HometownsController < ApplicationController
 
     @the_hometown = matching_hometowns.at(0)
 
+    @haunts_by_category = Haunt.where({ :hometown_id => the_id }).group_by(&:category)
+    
     render({ :template => "hometown_templates/show" })
   end
 

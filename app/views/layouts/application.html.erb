@@ -32,8 +32,35 @@
   </head>
 
   <body class="pico">
-    <div class="container-two-thirds">
-      <%= yield %>
-    </div>
+    <header>
+      <div class="container-two-thirds">
+        <nav>
+          <ul>
+            <li>
+              <a href="/hometowns">
+                <strong>
+                  Hometowns
+                </strong>
+              </a>
+            </li>
+            <li>
+              <a href="/recommendations">
+                <strong>
+                  Recommend a haunt
+                </strong>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <div class="container-two-thirds">
+        <%= yield %>
+      </div>
+    </main>
+    <footer>
+      Riley Morrison 2026 All Rights Reserved
+    </footer>
   </body>
 </html>

@@ -1,66 +1,59 @@
-<h1>
-  Hometown #<%= @the_hometown.id %> details
-</h1>
+<h1><%= @the_hometown.name %></h1>
 
-<article>
-  <div>
-    <a href="/hometowns">
-      Go back
-    </a>
-  </div>
+<div id="map" style="width:600px; height:450px;"></div>
 
-  <div>
-    <a href="/delete_hometown/<%= @the_hometown.id %>">
-      Delete hometown
-    </a>
-  </div>
-  <dl>
-    <dt>
-      Name
-    </dt>
-    <dd>
-      <%= @the_hometown.name %>
-    </dd>
+<script>
+function initMap() {
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 12,
+    center: { lat: 39.5, lng: -98.35 } // temporary, will be replaced
+  });
 
-    <dt>
-      Created at
-    </dt>
-    <dd>
-      <%= time_ago_in_words(@the_hometown.created_at) %> ago
-    </dd>
+  const geocoder = new google.maps.Geocoder();
+  const haunts = <%= raw Haunt.where(hometown_id: @the_hometown.id).filter_map(&:address).to_json %>;
+  let firstResult = true;
 
-    <dt>
-      Updated at
-    </dt>
-    <dd>
-      <%= time_ago_in_words(@the_hometown.updated_at) %> ago
-    </dd>
-  </dl>
-</article>
+  haunts.forEach(function(address) {
+    geocoder.geocode({ address: address }, function(results, status) {
+      if (status === "OK") {
+        const location = results[0].geometry.location;
 
-<hr>
+        if (firstResult) {
+          map.setCenter(location);
+          firstResult = false;
+        }
 
+        new google.maps.Marker({
+          map: map,
+          position: location,
+          title: address
+        });
+      }
+    });
+  });
+}
+</script>
 
-<article>
-  <header>
-    <h2>
-      Edit hometown
-    </h2>
-  </header>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_MAPS_API_KEY"] %>&callback=initMap">
+</script>
 
-  <form action="/modify_hometown/<%= @the_hometown.id %>"  method="post" >
-    <div>
-      <label for="name_box">
-        Name
-      </label>
-
-      <input type="text" id="name_box" name="query_name" value="<%= @the_hometown.name %>">
-    </div>
-
-    <button type="submit">
-      Update hometown
-    </button>
-  </form>
-</article>
-
-<hr>
+<% @haunts_by_category.each do |category, haunts| %>
+  <article>
+    <h3><%= category %></h3>
+    <ul>
+      <% haunts.each do |a_haunt| %>
+        <li>
+          <a href="/haunts/<%= a_haunt.id %>">
+            <%= a_haunt.name %>
+          </a>
+          <ul>
+            <% Recommendation.where(haunt_id: a_haunt.id).each do |a_rec| %>
+              <li><%= a_rec.specific_recommendations %></li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+  </article>
+<% end %>

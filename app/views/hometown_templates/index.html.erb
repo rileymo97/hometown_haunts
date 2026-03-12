@@ -1,43 +1,44 @@
-<h1>
-  List of all hometowns
-</h1>
+<h1>Hometowns</h1>
 
-<hr>
+<div id="map" style="width:600px; height:450px;"></div>
 
-<article>
-  <header>
-    <h2>
-      Add a new hometown
-    </h2>
-  </header>
+<script>
+  function initMap() {
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 4,
+      center: { lat: 39.5, lng: -98.35 } // center of US
+    });
 
-  <form action="/insert_hometown" method="post">
-    <div>
-      <label for="name_box">
-        Name
-      </label>
+    const geocoder = new google.maps.Geocoder();
 
-      <input type="text" id="name_box" name="query_name">
-    </div>
+    const addresses = <%= raw @list_of_hometowns.filter_map(&:address).to_json %>;
 
-    <button type="submit">
-      Create hometown
-    </button>
-  </form>
-</article>
+    addresses.forEach(function(address) {
+      geocoder.geocode({ address: address }, function(results, status) {
+        if (status === "OK") {
+          new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location,
+            title: address
+          });
+        }
+      });
+    });
+  }
+</script>
 
-<hr>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_MAPS_API_KEY"] %>&callback=initMap">
+</script>
 
 <article>
   <ul>
     <% @list_of_hometowns.each do |a_hometown| %>
       <li>
         <a href="/hometowns/<%= a_hometown.id %>">
-          Hometown #<%= a_hometown.id %>
+          <%= a_hometown.name %>
         </a>
       </li>
     <% end %>
   </ul>
 </article>
-
-<hr>
