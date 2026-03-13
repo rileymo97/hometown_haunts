@@ -10,15 +10,21 @@
   <input type="text" name="query_haunt_name" placeholder="e.g. Postino Central">
 
   <label>Category</label>
-  <input type="text" name="query_category" placeholder="e.g. Restaurant, Bar, Activity">
+  <select name="query_category">
+    <option value="">-- Select a category --</option>
+    <option value="Restaurant">Restaurant</option>
+    <option value="Bar">Bar</option>
+    <option value="Activity">Activity</option>
+    <option value="Coffee Shop">Coffee Shop</option>
+  </select>
 
   <label>Address</label>
   <input type="text" name="query_address" placeholder="e.g. 1 E Washington St, Phoenix, AZ">
 
-  <label>Your Recommendation</label>
+  <label>Any specific recommendations?</label>
   <input type="text" name="query_specific_recommendations" placeholder="e.g. Get the bruschetta!">
 
-  <label>Approximate times visited</label>
+  <label>How many haunts 👻? (# times you've visited)</label>
   <input type="number" name="query_appx_times_haunted">
 
   <button type="submit">Submit Recommendation</button>

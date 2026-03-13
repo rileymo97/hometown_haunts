@@ -28,4 +28,11 @@ class User < ApplicationRecord
   has_many  :recommendations, class_name: "Recommendation", foreign_key: "user_id", dependent: :destroy
   has_many :recipients, through: :requested_friendships, source: :recipient
   has_many :requesters, through: :received_friendships, source: :requester
+  has_many :friendships
+end
+
+def friend_ids
+  accepted = Friendship.where(request_status: "accepted")
+                       .where("requester_id = ? OR recipient_id = ?", id, id)
+  accepted.map { |f| f.requester_id == id ? f.recipient_id : f.requester_id }
 end

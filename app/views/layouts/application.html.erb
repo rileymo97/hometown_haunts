@@ -39,26 +39,50 @@
             <li>
               <a href="/hometowns">
                 <strong>
-                  Hometowns
+                  Home
                 </strong>
               </a>
             </li>
             <li>
-              <a href="/recommendations">
+              <a href="/recommend">
                 <strong>
                   Recommend a haunt
                 </strong>
               </a>
             </li>
+            <li>
+              <a href="/friends">
+                <strong>
+                  Friends
+                </strong>
+              </a>
+            </li>
+          </ul>
+          <ul>
+            <% if user_signed_in? %>
+              <li>Hi, <%= current_user.username %>!</li>
+              <li>
+                <form action="/users/sign_out" method="post" style="display:inline">
+                  <input type="hidden" name="_method" value="delete">
+                  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                  <button type="submit">Sign out</button>
+                </form>
+              </li>
+            <% else %>
+              <li><a href="/users/sign_in">Sign in</a></li>
+              <li><a href="/users/sign_up">Sign up</a></li>
+            <% end %>
           </ul>
         </nav>
       </div>
     </header>
-    <main>
-      <div class="container-two-thirds">
-        <%= yield %>
-      </div>
-    </main>
+      <main>
+        <article>
+          <div class="container-two-thirds">
+            <%= yield %>
+          </div>
+        </article>
+      </main>
     <footer>
       Riley Morrison 2026 All Rights Reserved
     </footer>

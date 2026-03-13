@@ -19,7 +19,10 @@ Rails.application.routes.draw do
   #------------------------------
 
   # Routes for the Friendship resource:
-
+  get "/friends" => "friendships#index"
+  post "/friendships" => "friendships#create"
+  patch "/friendships/:id/accept" => "friendships#accept"
+  patch "/friendships/:id/decline" => "friendships#decline"
   # CREATE
   post("/insert_friendship", { :controller => "friendships", :action => "create" })
 

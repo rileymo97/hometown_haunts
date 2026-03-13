@@ -1,59 +1,87 @@
-<h1>
-  List of all friendships
-</h1>
+<h1>Friends</h1>
 
-<hr>
-
+<%# Incoming requests %>
 <article>
-  <header>
-    <h2>
-      Add a new friendship
-    </h2>
-  </header>
-
-  <form action="/insert_friendship" method="post">
-    <div>
-      <label for="requester_id_box">
-        Requester
-      </label>
-
-      <input type="text" id="requester_id_box" name="query_requester_id">
-    </div>
-
-    <div>
-      <label for="recipient_id_box">
-        Recipient
-      </label>
-
-      <input type="text" id="recipient_id_box" name="query_recipient_id">
-    </div>
-
-    <div>
-      <label for="request_status_box">
-        Request status
-      </label>
-
-      <input type="text" id="request_status_box" name="query_request_status">
-    </div>
-
-    <button type="submit">
-      Create friendship
-    </button>
-  </form>
+  <h2>Friend Requests</h2>
+  <% if @incoming.empty? %>
+    <p>No pending requests.</p>
+  <% else %>
+    <ul>
+      <% @incoming.each do |f| %>
+        <li>
+          <%= f.requester.username %>
+          <form action="/friendships/<%= f.id %>/accept" method="post" style="display:inline">
+            <input type="hidden" name="_method" value="patch">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <button type="submit">Accept</button>
+          </form>
+          <form action="/friendships/<%= f.id %>/decline" method="post" style="display:inline">
+            <input type="hidden" name="_method" value="patch">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <button type="submit">Decline</button>
+          </form>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
 </article>
 
-<hr>
-
+<%# Current friends %>
 <article>
+  <h2>My Friends</h2>
+  <% if @friends.empty? %>
+    <p>No friends yet.</p>
+  <% else %>
+    <ul>
+      <% @friends.each do |f| %>
+        <li>
+          <% friend = f.requester_id == current_user.id ? f.recipient : f.requester %>
+          <%= friend.username %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</article>
+
+<%# Browse all users %>
+<article>
+  <h2>Find Friends</h2>
   <ul>
-    <% @list_of_friendships.each do |a_friendship| %>
+    <% @all_users.each do |user| %>
+      <%# Skip users you already have a friendship with %>
+      <% already_requested = @outgoing.any? { |f| f.recipient_id == user.id } %>
+      <% already_friends = @friends.any? { |f| f.requester_id == user.id || f.recipient_id == user.id } %>
+      <% incoming_from = @incoming.any? { |f| f.requester_id == user.id } %>
       <li>
-        <a href="/friendships/<%= a_friendship.id %>">
-          Friendship #<%= a_friendship.id %>
-        </a>
+        <%= user.username %>
+        <% if already_friends %>
+          ✓ Friends
+        <% elsif already_requested %>
+          Request sent
+        <% elsif incoming_from %>
+          (sent you a request)
+        <% else %>
+          <form action="/friendships" method="post" style="display:inline">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input type="hidden" name="recipient_id" value="<%= user.id %>">
+            <button type="submit">+ Add Friend</button>
+          </form>
+        <% end %>
       </li>
     <% end %>
   </ul>
 </article>
 
-<hr>
+<%# Outgoing requests %>
+<article>
+  <h2>Sent Requests</h2>
+  <% if @outgoing.empty? %>
+    <p>No sent requests.</p>
+  <% else %>
+    <ul>
+      <% @outgoing.each do |f| %>
+        <li><%= f.recipient.username %> — pending</li>
+      <% end %>
+    </ul>
+  <% end %>
+</article>

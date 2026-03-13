@@ -44,7 +44,7 @@ function initMap() {
     <ul>
       <% haunts.each do |a_haunt| %>
         <li>
-          <a href="/haunts/<%= a_haunt.id %>">
+          <a href="https://www.google.com/search?q=<%= URI.encode_www_form_component("#{a_haunt.name} #{a_haunt.address}") %>" target="_blank">
             <%= a_haunt.name %>
           </a>
           <ul>

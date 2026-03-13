@@ -1,9 +1,12 @@
 class FriendshipsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
-    matching_friendships = Friendship.all
-
-    @list_of_friendships = matching_friendships.order({ :created_at => :desc })
-
+    @all_users = User.where.not(id: current_user.id)
+    @incoming = Friendship.where(recipient_id: current_user.id, request_status: "pending")
+    @outgoing = Friendship.where(requester_id: current_user.id, request_status: "pending")
+    @friends = Friendship.where(request_status: "accepted")
+                         .where("requester_id = ? OR recipient_id = ?", current_user.id, current_user.id)
     render({ :template => "friendship_templates/index" })
   end
 
@@ -18,17 +21,26 @@ class FriendshipsController < ApplicationController
   end
 
   def create
-    the_friendship = Friendship.new
-    the_friendship.requester_id = params.fetch("query_requester_id")
-    the_friendship.recipient_id = params.fetch("query_recipient_id")
-    the_friendship.request_status = params.fetch("query_request_status")
+    friendship = Friendship.new
+    friendship.requester_id = current_user.id
+    friendship.recipient_id = params.fetch("recipient_id")
+    friendship.request_status = "pending"
+    friendship.save
+    redirect_to("/friends", { :notice => "Friend request sent!" })
+  end
 
-    if the_friendship.valid?
-      the_friendship.save
-      redirect_to("/friendships", { :notice => "Friendship created successfully." })
-    else
-      redirect_to("/friendships", { :alert => the_friendship.errors.full_messages.to_sentence })
-    end
+  def accept
+    friendship = Friendship.find(params[:id])
+    friendship.request_status = "accepted"
+    friendship.save
+    redirect_to("/friends", { :notice => "Friend request accepted!" })
+  end
+
+  def decline
+    friendship = Friendship.find(params[:id])
+    friendship.request_status = "declined"
+    friendship.save
+    redirect_to("/friends", { :notice => "Friend request declined." })
   end
 
   def update
