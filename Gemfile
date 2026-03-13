@@ -1,5 +1,6 @@
 source "https://rubygems.org"
 
+gem "simple_form"
 gem "rails", "~> 8.0.2"               # The web framework
 gem "devise"
 gem "propshaft"                       # Asset pipeline (CSS, JS, images)
